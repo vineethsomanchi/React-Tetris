@@ -3,8 +3,26 @@ import { createStage } from '../utils/gameHelpers';
 
 export const useStage = (player, resetPlayer) => {
     const [stage, setStage] = useState(createStage());
+    const [rowsCleared,setRowsCleared] = useState(0);
 
     useEffect(() => {
+
+        setRowsCleared(0);
+
+        const sweepRows = newStage =>
+            newStage.reduce((acc, row) => {
+                //findIndex returns -1 if nothing found or if no cell is empty
+                if (row.findIndex(cell => cell[0] === 0) === -1) {
+                    setRowsCleared(prev => prev + 1);
+                    //Pushes empty array to the top which creates illusion that bottom row deleted
+                    acc.unshift(new Array(newStage[0].length).fill([0, 'clear']));
+                    return acc;
+                }
+                //If not full, push nonfilled row into accumulator
+                acc.push(row);
+                return acc;
+            }, [])
+
         const updateStage = prevStage => {
             //Clear previous render
             const newStage = prevStage.map(row =>
@@ -26,6 +44,7 @@ export const useStage = (player, resetPlayer) => {
             //Check for collision
             if (player.collided) {
                 resetPlayer();
+                return sweepRows(newStage);
             }
             return newStage;
         };
@@ -33,5 +52,5 @@ export const useStage = (player, resetPlayer) => {
         setStage(prev => updateStage(prev));
     }, [player, resetPlayer]);
 
-    return [stage, setStage];
+    return [stage, setStage, rowsCleared];
 };
