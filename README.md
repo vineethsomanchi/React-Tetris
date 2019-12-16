@@ -1,4 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Motivations/Guidance was provided via Weibencalk's tutorial on freeCodeCamp.com and W3Schools
 
 ## Available Scripts
 
