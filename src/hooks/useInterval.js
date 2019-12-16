@@ -1,3 +1,5 @@
+//File credit: Dan Abramov - Makes SetInterval declarative using React Hooks
+
 import { useEffect, useRef } from 'react';
 
 export function useInterval(callback, delay) {

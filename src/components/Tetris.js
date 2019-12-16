@@ -12,6 +12,7 @@ import StartButton from './StartButton';
 //Hooks
 import { usePlayer } from '../hooks/usePlayer';
 import { useStage } from '../hooks/useStage';
+import {useInterval } from '../hooks/useInterval';
 
 const Tetris = () => {
   
@@ -31,6 +32,7 @@ const Tetris = () => {
   //Restart game, clear everything
   const startGame = () => {
     setStage(createStage());
+    setDropTime(1000);
     resetPlayer();
     setGameOver(false);
   }
@@ -53,7 +55,17 @@ const Tetris = () => {
   }
 
   const dropPlayer = () => {
+    setDropTime(null); //Stop interval when player presses down
     drop();
+  }
+
+  //On keyup of down arrow, restart interval
+  const startInt = ({ keyCode }) => {
+    if (!gameOver) {
+      if (keyCode === 40) {
+        setDropTime(1000)
+      }
+    }
   }
  
   const move = ({ keyCode }) => {
@@ -71,13 +83,16 @@ const Tetris = () => {
       } else if (keyCode === 38) {
         playerRotate(stage, 1)
       }
-
     }
   }
 
+  useInterval(() => {
+    drop();
+  }, dropTime);
+
   return (
     //Wrapper allows us to register keypresses even if they're outside Tetris game
-    <StyledTetrisWrapper role="button" tabIndex = "0" onKeyDown={e => move(e)}>
+    <StyledTetrisWrapper role="button" tabIndex = "0" onKeyDown={e => move(e)} onKeyUp={startInt}>
       <div className="title-wrapper"><h1 className="title">Vinny's React Tetris</h1></div>
       <StyledTetris>
         <Stage stage={stage} />
