@@ -8,7 +8,7 @@ React Tetris uses ES6 JavaScipt and React.js 16.8 to design an interactive tile-
 Although I've worked with JavaScript and React/Redux for years, I built this game to showcase my commitment to staying up to date with their latest features. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 Motivations/Guidance was provided via Weibencalk's tutorial on https://freecodecamp.org and W3Schools.
 
-<!-- ![Sample]() -->
+![Sample](https://github.com/vineethsomanchi/react-tetris/blob/master/src/stylesheets/img/sample.png)
 
 ***
 
